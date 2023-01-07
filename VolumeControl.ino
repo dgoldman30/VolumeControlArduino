@@ -45,5 +45,5 @@ void loop() {
     mute = true;
   }
   Serial.println(ret);
-  delay(200); //this delay is vital. Thank you to "09" who pointed this out to me! :)
+  delay(200); 
 }
