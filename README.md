@@ -7,8 +7,8 @@
 3. Computer Running Windows
 4. LED Lights 
 # Future Implementations
-1. Currently, the joystick only controls volume with the y axis and toggles muting audio input and output with a select analog input. In the future x axis will control microphone input.
-2. Custom Macros using external buttons
-3. GUI 
+1. Custom Macros using external buttons
+2. GUI 
+3. LCD to show computer volume and microphone input level. 
 # Notes
 * In the future, wiring diagrams and .STL files will be provided, so others can replicate the project. I also intend on providing photos of the finished product when smaller microcontrollers arrive. 
