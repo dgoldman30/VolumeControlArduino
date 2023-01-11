@@ -3,7 +3,9 @@
 #define SEL_PIN 2
 #define LED_BUILTIN 13
 #define OPENMIC_PIN 12
-#include <Keyboard.h>
+#include <ezButton.h>
+
+ezButton button(2); 
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
@@ -12,11 +14,22 @@ void setup() {
   pinMode(HORZ_PIN, INPUT);
   pinMode(SEL_PIN, INPUT_PULLUP);
   Serial.begin(9600);
+  
 }
 
 boolean mute = false;
 void loop() {
+     button.loop(); 
   String ret = "";
+  if (button.isReleased()) {
+    mute = !mute;
+    if (mute) {
+      ret = "MU";
+    }
+    else {
+      ret = "UN";
+    }
+  }
   if (mute == false) {
     digitalWrite(OPENMIC_PIN, HIGH);
     digitalWrite(LED_BUILTIN, LOW);
@@ -24,34 +37,6 @@ void loop() {
     digitalWrite(OPENMIC_PIN, LOW);
     digitalWrite(LED_BUILTIN, HIGH);
   }
-
-  // int val = analogRead(VERT_PIN);
-  // int ret = 0;
-  // if (val > 700 && mute == false) {
-  //   ret = 1;
-  // }
-  // else if (val < 300 && mute == false)
-  // {
-  //   ret = -1;
-  // }
-  // else if (mute == true) {
-  //   ret = -100;
-  // }
-  // if (digitalRead(SEL_PIN) == LOW && mute == true) {
-  //   mute = false;
-  // }
-  // else if (digitalRead(SEL_PIN) == LOW && mute == false){
-  //   mute = true;
-  // }
-  // Serial.println(ret);
-  // delay(200); //this delay is vital. Thank you to "09" who pointed this out to me! :)
-  // INSTEAD WELL TRACK X AND Y SERIAL PRINT BASED ON ACTION
-  if (digitalRead(SEL_PIN) == LOW && mute == true) {
-    mute = false;
-  } else if (digitalRead(SEL_PIN) == LOW && mute == false) {
-    mute = true;
-  }
-
   int xval = analogRead(HORZ_PIN);
   int yval = analogRead(VERT_PIN);
 
@@ -59,14 +44,13 @@ void loop() {
     ret = "V+";
   } else if (yval < 300 && mute == false) {
     ret = "V-";
-  } else if (mute) {
-    ret = "MUTE";
-  }
+  } 
    else if (xval > 700 && mute == false) {
     ret = "M-";
   } else if (xval < 300 && mute == false) {
     ret = "M+";
   }
   Serial.println(ret);
-  delay(200);
+   delay(200);
+
 }
